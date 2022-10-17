@@ -71,6 +71,12 @@ void main() {
       );
       expect(value, '2 people');
     });
+
+    test('Read with hierarchy', () {
+      LocalizationService.instance.addSentence('example', {'title': 'Hierarchy Example'});
+      final value = LocalizationService.instance.read('example.title', []);
+      expect(value, 'Hierarchy Example');
+    });
   });
 
   group('json file', () {

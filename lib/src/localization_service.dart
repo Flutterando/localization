@@ -13,7 +13,7 @@ class LocalizationService {
     return _instance!;
   }
 
-  final _sentences = <String, String>{};
+  final _sentences = <String, dynamic>{};
 
   Future changeLanguage(Locale locale, List<String> directories) async {
     clearSentences();
@@ -46,12 +46,12 @@ class LocalizationService {
       if (_sentences.containsKey(entry.key)) {
         ColoredPrint.warning('Duplicated Key: \"${entry.key}\" Path: \"$locale\"');
       }
-      _sentences[entry.key] = entry.value.toString();
+      _sentences[entry.key] = entry.value;
     }
   }
 
   @visibleForTesting
-  void addSentence(String key, String value) {
+  void addSentence(String key, dynamic value) {
     _sentences[key] = value;
   }
 
@@ -60,10 +60,13 @@ class LocalizationService {
     List<String> arguments, {
     List<bool>? conditions,
   }) {
-    if (!_sentences.containsKey(key)) {
-      return key;
-    }
-    var value = _sentences[key]!;
+    List<String> keys = key.split('.');
+    var value = keys.fold(_sentences, (_value, _key) {
+      if (_value is Map) {
+        return _value[_key] ?? _key;
+      }
+      return _value.toString();
+    });
     if (value.contains('%s')) {
       value = replaceArguments(value, arguments);
     }
