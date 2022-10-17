@@ -17,7 +17,7 @@ class LocalizationService {
 
   Future changeLanguage(Locale locale, List<String> directories) async {
     clearSentences();
-    for (var directory in directories) {
+    for (final directory in directories) {
       await _changeLanguage(locale, directory);
     }
   }
@@ -25,10 +25,12 @@ class LocalizationService {
   Future _changeLanguage(Locale locale, String directory) async {
     late String data;
     final selectedLanguage = locale.toString();
-    if (directory.endsWith('/')) {
-      directory = directory.substring(0, directory.length - 1);
+    var newDirectory = directory;
+    // var jubileu = '';
+    if (newDirectory.endsWith('/')) {
+      newDirectory = newDirectory.substring(0, newDirectory.length - 1);
     }
-    final jsonFile = '$directory/$selectedLanguage.json';
+    final jsonFile = '$newDirectory/$selectedLanguage.json';
 
     data = await rootBundle.loadString(jsonFile);
     ColoredPrint.log('Loaded $jsonFile');
@@ -42,9 +44,9 @@ class LocalizationService {
       _result = {};
     }
 
-    for (var entry in _result.entries) {
+    for (final entry in _result.entries) {
       if (_sentences.containsKey(entry.key)) {
-        ColoredPrint.warning('Duplicated Key: \"${entry.key}\" Path: \"$locale\"');
+        ColoredPrint.warning('Duplicated Key: "${entry.key}" Path: "$locale"');
       }
       _sentences[entry.key] = entry.value.toString();
     }
@@ -76,19 +78,22 @@ class LocalizationService {
 
   String replaceConditions(String value, List<bool>? conditions) {
     final matchers = _getConditionMatch(value);
+    var newValue = value;
 
-    if (conditions == null || conditions.length == 0) {
-      ColoredPrint.error('Existe condicionais configurada na String mas não foi passado nenhum por parametro.');
-      return value;
+    if (conditions == null || conditions.isEmpty) {
+      ColoredPrint.error('''
+Existe condicionais configurada na String mas não foi passado nenhum por parametro.''');
+      return newValue;
     }
     if (matchers.length != conditions.length) {
-      ColoredPrint.error('A Quantidade de condicionais configurada na chave não condiz com os parametros.');
-      return value;
+      ColoredPrint.error('''
+A Quantidade de condicionais configurada na chave não condiz com os parametros.''');
+      return newValue;
     }
 
-    for (var matcher in matchers) {
+    for (final matcher in matchers) {
       for (var i = 1; i <= matcher.groupCount; i++) {
-        value = _replaceConditions(matchers, conditions, value);
+        newValue = _replaceConditions(matchers, conditions, newValue);
         final finded = matcher.group(i);
         if (finded == null) {
           continue;
@@ -96,38 +101,40 @@ class LocalizationService {
       }
     }
 
-    return value;
+    return newValue;
   }
 
   Iterable<RegExpMatch> _getConditionMatch(String text) {
-    String pattern = r"%b\{(\s*?.*?)*?\}";
-    RegExp regExp = new RegExp(
+    const pattern = r'%b\{(\s*?.*?)*?\}';
+    final regExp = RegExp(
       pattern,
       caseSensitive: false,
-      multiLine: false,
     );
     if (regExp.hasMatch(text)) {
-      var matches = regExp.allMatches(text);
+      final matches = regExp.allMatches(text);
       return matches;
     }
 
     return [];
   }
 
-  String _replaceConditions(Iterable<RegExpMatch> matches, List<bool> plurals, String text) {
+  String _replaceConditions(
+    Iterable<RegExpMatch> matches,
+    List<bool> plurals,
+    String text,
+  ) {
     var newText = text;
-    int i = 0;
+    var i = 0;
 
-    for (var item in matches) {
-      var replaced = item.group(0) ?? '';
+    for (final item in matches) {
+      final replaced = item.group(0) ?? '';
 
-      RegExp regCondition = new RegExp(
+      final regCondition = RegExp(
         r'(?<=\{)(.*?)(?=\})',
         caseSensitive: false,
-        multiLine: false,
       );
-      var e = regCondition.stringMatch(replaced)?.split(':');
-      var n = plurals[i] ? e![0] : e![1];
+      final e = regCondition.stringMatch(replaced)?.split(':');
+      final n = plurals[i] ? e![0] : e![1];
 
       newText = newText.replaceAll(replaced, n);
 
@@ -141,8 +148,9 @@ class LocalizationService {
     final regExp = RegExp(r'(\%s\d?)');
     final matchers = regExp.allMatches(value);
     var argsCount = 0;
+    var newString = value;
 
-    for (var matcher in matchers) {
+    for (final matcher in matchers) {
       for (var i = 1; i <= matcher.groupCount; i++) {
         final finded = matcher.group(i);
         if (finded == null) {
@@ -150,12 +158,15 @@ class LocalizationService {
         }
 
         if (finded == '%s') {
-          value = value.replaceFirst('%s', arguments[argsCount]);
+          newString = newString.replaceFirst(
+            '%s',
+            arguments[argsCount],
+          );
           argsCount++;
           continue;
         }
 
-        var extractedId = int.tryParse(finded.replaceFirst('%s', ''));
+        final extractedId = int.tryParse(finded.replaceFirst('%s', ''));
         if (extractedId == null) {
           continue;
         }
@@ -164,11 +175,11 @@ class LocalizationService {
           continue;
         }
 
-        value = value.replaceFirst(finded, arguments[extractedId]);
+        newString = newString.replaceFirst(finded, arguments[extractedId]);
       }
     }
 
-    return value;
+    return newString;
   }
 
   void clearSentences() {

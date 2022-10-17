@@ -13,8 +13,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutterando_analysis: ^0.0.1+1
+  
 
 flutter:
   assets:
+    - example/assets/img/
     - test/assets/lang/
     - test/assets/lang2/

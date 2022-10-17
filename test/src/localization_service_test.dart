@@ -29,31 +29,55 @@ void main() {
     });
 
     test('Read with 2 arguments', () {
-      LocalizationService.instance.addSentence('full-name-complete', 'Jacob %s %s');
+      LocalizationService.instance.addSentence(
+        'full-name-complete',
+        'Jacob %s %s',
+      );
 
-      var value = LocalizationService.instance.read('full-name-complete', ['Araujo', 'Moura']);
+      final value = LocalizationService.instance.read(
+        'full-name-complete',
+        [
+          'Araujo',
+          'Moura',
+        ],
+      );
       expect(value, 'Jacob Araujo Moura');
     });
 
     test('Read with positional arguments', () {
-      LocalizationService.instance.addSentence('full-name-complete-positional', 'Jacob %s1 %s0');
+      LocalizationService.instance.addSentence(
+        'full-name-complete-positional',
+        'Jacob %s1 %s0',
+      );
 
-      var value = LocalizationService.instance.read('full-name-complete-positional', ['Araujo', 'Moura']);
+      final value = LocalizationService.instance.read(
+        'full-name-complete-positional',
+        ['Araujo', 'Moura'],
+      );
       expect(value, 'Jacob Moura Araujo');
     });
 
     test('Read with positional arguments out range', () {
-      LocalizationService.instance.addSentence('full-name-complete-positional', 'Jacob %s0 %s1 %s9');
+      LocalizationService.instance.addSentence(
+        'full-name-complete-positional',
+        'Jacob %s0 %s1 %s9',
+      );
 
-      var value = LocalizationService.instance.read('full-name-complete-positional', ['Araujo', 'Moura']);
+      final value = LocalizationService.instance.read(
+        'full-name-complete-positional',
+        ['Araujo', 'Moura'],
+      );
       expect(value, 'Jacob Araujo Moura %s9');
     });
 
     test('Read with false condition arguments', () {
-      var count = 1;
-      LocalizationService.instance.addSentence('person-label', '%s %b{people:person}');
+      const count = 1;
+      LocalizationService.instance.addSentence(
+        'person-label',
+        '%s %b{people:person}',
+      );
 
-      var value = LocalizationService.instance.read(
+      final value = LocalizationService.instance.read(
         'person-label',
         [count.toString()],
         conditions: [count > 1],
@@ -61,10 +85,13 @@ void main() {
       expect(value, '1 person');
     });
     test('Read with true condition arguments', () {
-      final count = 2;
-      LocalizationService.instance.addSentence('person-label', '%s %b{people:person}');
+      const count = 2;
+      LocalizationService.instance.addSentence(
+        'person-label',
+        '%s %b{people:person}',
+      );
 
-      var value = LocalizationService.instance.read(
+      final value = LocalizationService.instance.read(
         'person-label',
         [count.toString()],
         conditions: [count > 1],
@@ -75,7 +102,10 @@ void main() {
 
   group('json file', () {
     test('load en_US', () async {
-      await LocalizationService.instance.changeLanguage(Locale('en', 'US'), ['test/assets/lang']);
+      await LocalizationService.instance.changeLanguage(
+        const Locale('en', 'US'),
+        ['test/assets/lang'],
+      );
       var value = LocalizationService.instance.read('login-label', []);
       expect(value, 'User');
       value = LocalizationService.instance.read('home-title', ['Flutterando']);

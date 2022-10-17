@@ -57,15 +57,15 @@ class CustomAppBar extends StatelessWidget {
               leading: const Icon(FluentIcons.translate),
               title: const Text('New'),
               items: [
-                DropDownButtonItem(
-                  title: Text('new-key'.i18n()),
-                  onTap: () {
+                MenuFlyoutItem(
+                  text: Text('new-key'.i18n()),
+                  onPressed: () {
                     onNewKeyPressed?.call();
                   },
                 ),
-                DropDownButtonItem(
-                  title: Text('new-language'.i18n()),
-                  onTap: () {
+                MenuFlyoutItem(
+                  text: Text('new-language'.i18n()),
+                  onPressed: () {
                     onNewLanguagePressed?.call();
                   },
                 ),
@@ -90,10 +90,8 @@ class CustomAppBar extends StatelessWidget {
           ),
           separedWidget,
           const Spacer(),
-          ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 400,
-            ),
+          Expanded(
+            flex: 5,
             child: TextBox(
               controller: searchTextController,
               placeholder: 'search'.i18n() + '...',
