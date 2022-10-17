@@ -81,7 +81,7 @@ With few and intuitive lines of code you can have those in your project without 
 ## Sponsors
 
 <a href="https://fteam.dev">
-    <img src="readme_assets/sponsor-logo.png" alt="Logo" width="120">
+    <img src="example/assets/img/sponsor-logo.png" alt="Logo" width="120">
   </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -91,17 +91,17 @@ With few and intuitive lines of code you can have those in your project without 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To get Asuka in your project follow either of the instructions below:
+To get localization in your project follow either of the instructions below:
 
-a) Add Asuka as a dependency in your Pubspec.yaml:
+a) Add localization as a dependency in your Pubspec.yaml:
  ```yaml
    dependencies:
-     asuka: any
+     localization: any
 ``` 
 
 b) Use Dart Pub:
 ```sh
-  dart pub add asuka
+  dart pub add localization
 ```
 
 <br>
@@ -211,7 +211,7 @@ Thank you to all the people who contributed to this project, whitout you this pr
 
 <p align="center">
   <a href="https://www.flutterando.com.br">
-    <img width="110px" src="https://raw.githubusercontent.com/Flutterando/asuka/main/readme_assets/log-flutterando.png">
+    <img width="110px" src="example/assets/img/logo-flutterando.png">
   </a>
   <p align="center">
     Built and maintained by <a href="https://www.flutterando.com.br">Flutterando</a>.
