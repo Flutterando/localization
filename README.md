@@ -7,7 +7,7 @@
 <br />
 <div align="center">
   <a href="https://pub.dev/packages/localization">
-    <img src="example/assets/img/logo.png" alt="Logo" width="180">
+    <img src="readme_assets/img/logo.png" alt="Logo" width="180">
   </a>
 
   <p align="center">
@@ -45,7 +45,7 @@
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#sponsors">Sponsors</a></li>
     <li><a href="#getting-started">Getting Started</a></li>
-    <li><a href="#how-to-use">How to Use</a></li>
+    <li><a href="#how-to-use">How to Use</a><ol><li><a href ="#">Additional Setings</a></li></ol></li>
     <li><a href="#features">Features</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -61,17 +61,12 @@
 
 <!-- PROJECT EXAMPLE (IMAGE) -->
 
-<br>
-<Center>
-<img src="example/assets/img/localizationui.png" alt="Asuka package working gif" >
-</Center>
 
-<br>
 
 <!-- PROJECT DESCRIPTION -->
 
-Asuka is a Dart package that aims to simplify and keep a clean approach when implementing some visual elements from Flutter like Snackbars, Dialogs and ModalSheets. 
-With few and intuitive lines of code you can have those in your project without the hassle of having to code them from scratch, while having the option of quickly removing them if need be. 
+Localization é um pacote Dart que visa simplificar e manter uma abordagem limpa ao implementar uma novo formato
+Para oferecer suporte a vários idiomas em seu aplicativo Flutter, de um modo simples. Deixando-lhe internalizado, á várias “linguagens”.
 
 <i> This project is distributed under the MIT License. See `LICENSE.txt` for more information.</i>
 
@@ -81,7 +76,7 @@ With few and intuitive lines of code you can have those in your project without 
 ## Sponsors
 
 <a href="https://fteam.dev">
-    <img src="example/assets/img/sponsor-logo.png" alt="Logo" width="120">
+    <img src="readme_assets/img/sponsor-logo.png" alt="Logo" width="120">
   </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -89,19 +84,76 @@ With few and intuitive lines of code you can have those in your project without 
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+## Install
 
-To get localization in your project follow either of the instructions below:
+Use the **Localization** package together with **flutter_localization.
 
-a) Add localization as a dependency in your Pubspec.yaml:
- ```yaml
-   dependencies:
-     localization: any
-``` 
+Add in your `pubspec`:
+```yaml
+dependencies:
+  flutter_localizations: 
+    sdk: flutter
+  localization: <last-version>
 
-b) Use Dart Pub:
-```sh
-  dart pub add localization
+flutter:
+
+  # json files directory
+  assets:
+    - lib/i18n/
+```
+
+Now, add the delegate in **MaterialApp** or **CupertinoApp** and define a path where the translation json files will be:
+```dart
+ @override
+  Widget build(BuildContext context) {
+    // set json file directory
+    // default value is ['lib/i18n']
+    LocalJsonLocalization.delegate.directories = ['lib/i18n'];
+
+    return MaterialApp(
+      localizationsDelegates: [
+        // delegate from flutter_localization
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        // delegate from localization package.
+        LocalJsonLocalization.delegate,
+      ],
+      home: HomePage(),
+    );
+  }
+```
+
+## Json files
+
+The json file pattern must have the name of the locale and its content must be a json of key and value ONLY.
+Create the files in the directory configured (`LocalJsonLocalization.delegate.directories`):
+
+```
+lib/i18n/en_US.json
+lib/i18n/es_ES.json
+lib/i18n/pt_BR.json
+```
+
+See an example of a translation json file:
+
+**en_US.json**
+```json
+{
+  "welcome-text": "This text is in english"
+}
+```
+**es_ES.json**
+```json
+{
+  "welcome-text": "Este texto esta en español"
+}
+```
+**pt_BR.json**
+```json
+{
+  "welcome-text": "Este texto está em português"
+}
 ```
 
 <br>
@@ -109,34 +161,56 @@ b) Use Dart Pub:
 
 ## How to Use
 
-Add the following code where you call your Material App:
+For convenience, the **i18n()** method has been added to the String class via extension.
+So just add the translation json file key as string and use **i18n()** method to bring up the translation.
 
 ```dart
-import 'package:asuka/asuka.dart';
-
-MaterialApp(
-    builder: Asuka.builder,
-    navigatorObservers: [
-       Asuka.asukaHeroController //This line is needed for the Hero widget to work
-    ],
-);
-``` 
-Now you just have to call the named constructors for each widget that you want to use: 
-
-```dart
-import 'package:asuka/asuka.dart';
-
-Asuka.showSnackBar(SnackBar(
-    content: Text("Hello World"),
-));
-
-AsukaSnackbar.success("success").show();
+String text = 'welcome-text'.i18n();
+print(text) // prints 'This text is in english'
 ```
+
+We can also work with arguments for translation. Use **%s** notion:
+```json
+{
+  "welcome-text": "Welcome, %s"
+}
+```
+```dart
+String text = 'welcome-text'.i18n(['Peter']);
+print(text); // Welcome, Peter
+
+```
+The **%s** notation can also be retrieved positionally. Just use **%s0, %s1, %s2**...
+
+You could plularization your Strings. Use **%b{true:false}** notion, where left is a string value when condition is true and on the right is a value when condition is false:
+```json
+{
+  "person-text": "Welcome, %b{people:person}"
+}
+```
+```dart
+final count = 2;
+String text = 'person-text'.i18n(
+        [], //args is a required positional parameter, if you don't gave a %s notation give a empty list []
+        conditions: [count > 1]);
+print(text); // Welcome, people
+```
+<br>
+## Localization UI
+
+<br>
+<Center>
+<img src="readme_assets/img/localizationui.png" alt="Localization package working gif" >
+</Center>
 
 <br>
 
-_For more examples, please refer to the_ [Documentation](https://pub.dev/documentation/asuka/latest/)
+We have an application to help you configure your translation keys.
+The project is also open-source, so be fine if you want to help it evolve!
 
+[Download now](https://github.com/Flutterando/localization/releases)
+<br>
+**THAT`S IT!
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -196,7 +270,7 @@ Flutterando Community
 Thank you to all the people who contributed to this project, whitout you this project would not be here today.
 
 <a href="https://github.com/Flutterando/localization/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=flutterando/asuka" />
+  <img src="https://contrib.rocks/image?repo=flutterando/localization" />
 </a>
 <!-- Bot para Lista de contribuidores - https://allcontributors.org/  -->
 <!-- Opção (utilizada no momento): https://contrib.rocks/preview?repo=flutterando%2Fasuka -->
@@ -211,7 +285,7 @@ Thank you to all the people who contributed to this project, whitout you this pr
 
 <p align="center">
   <a href="https://www.flutterando.com.br">
-    <img width="110px" src="example/assets/img/logo-flutterando.png">
+    <img width="110px" src="readme_assets/img/logo-flutterando.png">
   </a>
   <p align="center">
     Built and maintained by <a href="https://www.flutterando.com.br">Flutterando</a>.
@@ -226,7 +300,7 @@ Thank you to all the people who contributed to this project, whitout you this pr
 <!-----------------------------Divisão---------------------------------------->
 
 
-
+<!---
 
 # Localization
 
@@ -342,6 +416,8 @@ print(text); // Welcome, people
 **
 **THAT`S IT!
 
+
+// add settings subtitutulo 
 ## Additional settings
 
 After installation, the **Localization** package is fully integrated into Flutter and can reflect changes made natively by the SDK.

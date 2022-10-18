@@ -18,6 +18,6 @@ dev_dependencies:
 
 flutter:
   assets:
-    - example/assets/img/
+    - readme_assets/img/
     - test/assets/lang/
     - test/assets/lang2/
