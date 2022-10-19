@@ -45,7 +45,9 @@
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#sponsors">Sponsors</a></li>
     <li><a href="#getting-started">Getting Started</a></li>
-    <li><a href="#how-to-use">How to Use</a><ol><li><a href ="#">Additional Setings</a></li></ol></li>
+    <li><a href="#how-to-use">How to Use</a>
+      <ol><li><a href ="#localizationui">Localization-Ui</a></li></ol> 
+    </li>
     <li><a href="#features">Features</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -84,8 +86,8 @@ Para oferecer suporte a vários idiomas em seu aplicativo Flutter, de um modo si
 
 
 <!-- GETTING STARTED -->
-## Install
-
+## Getting Started
+<a href"getting-started"></a>
 Use the **Localization** package together with **flutter_localization.
 
 Add in your `pubspec`:
@@ -199,10 +201,11 @@ print(text); // Welcome, people
 ## Localization UI
 
 <br>
+<a href="#localizationui">
 <Center>
 <img src="readme_assets/img/localizationui.png" alt="Localization package working gif" >
 </Center>
-
+</a>
 <br>
 
 We have an application to help you configure your translation keys.
