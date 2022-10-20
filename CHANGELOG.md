@@ -1,3 +1,5 @@
+## [2.1.0+1] 2022-02-03
+* Fixed on Localization-Ui
 ## [2.1.0] 2022-02-03
 * Added multiples path files.
 

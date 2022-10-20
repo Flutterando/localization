@@ -198,6 +198,7 @@ String text = 'person-text'.i18n(
 print(text); // Welcome, people
 ```
 <br>
+
 ## Localization UI
 
 <br>
