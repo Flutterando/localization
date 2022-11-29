@@ -43,7 +43,7 @@ Future dialogAddKeyName(BuildContext context) async {
               Navigator.of(context).pop();
             },
             style: ButtonStyle(
-              backgroundColor: ButtonState.all(SystemTheme.accentInstance.accent),
+              backgroundColor: ButtonState.all(SystemTheme.accentColor.accent),
             ),
             child: Text('save'.i18n()),
           )
@@ -88,7 +88,7 @@ Future dialogUpdateKeyName(String oldKey, BuildContext context) async {
               Navigator.of(context).pop();
             },
             style: ButtonStyle(
-              backgroundColor: ButtonState.all(SystemTheme.accentInstance.accent),
+              backgroundColor: ButtonState.all(SystemTheme.accentColor.accent),
             ),
             child: Text('save'.i18n()),
           )
@@ -128,7 +128,7 @@ Future dialogAddNewLanguage(BuildContext context) async {
               Navigator.of(context).pop();
             },
             style: ButtonStyle(
-              backgroundColor: ButtonState.all(SystemTheme.accentInstance.accent),
+              backgroundColor: ButtonState.all(SystemTheme.accentColor.accent),
             ),
             child: Text('save'.i18n()),
           )
@@ -165,7 +165,7 @@ class __DialogRemoveLanguageWidgetState extends State<_DialogRemoveLanguageWidge
     controller = AnimationController(vsync: this, duration: const Duration(seconds: 10));
     countDownAnimation = Tween<double>(begin: 10, end: 0).animate(controller);
 
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.forward();
     });
   }

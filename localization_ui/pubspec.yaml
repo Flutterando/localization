@@ -27,17 +27,17 @@ dependencies:
     sdk: flutter
   localization:
     path: ../
-  cupertino_icons: ^1.0.2
-  flutter_acrylic: ^1.0.0
-  flutter_triple: ^1.2.7+2
-  fpdart: ^0.0.12
-  file_picker: ^4.3.1
-  path: ^1.8.0
+  cupertino_icons: ^1.0.5
+  flutter_acrylic: ^1.0.0+2
+  flutter_triple: ^1.2.7+4
+  fpdart: ^0.3.0
+  file_picker: ^5.2.3
+  path: ^1.8.2
   lazy_data_table_plus: ^1.0.0
   lazy_data_table: ^0.3.1
-  bitsdojo_window: ^0.1.1+1
-  fluent_ui: ^3.12.0
-  system_theme: ^1.0.1
+  bitsdojo_window: ^0.1.5
+  fluent_ui: ^4.0.0
+  system_theme: ^2.0.0
   flutter_modular: ^5.0.3
   desktop_window: ^0.4.0
   window_size:
