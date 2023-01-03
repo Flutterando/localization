@@ -1,12 +1,13 @@
-import 'package:fpdart/fpdart.dart';
-import 'package:localization_ui/src/home/domain/entities/language_file.dart';
-import 'package:localization_ui/src/home/domain/errors/errors.dart';
-import 'package:localization_ui/src/home/domain/services/file_service.dart';
+import 'package:result_dart/result_dart.dart';
 
-typedef DeleteJsonCallback = Future<Either<FileServiceError, Unit>>;
+import '../entities/language_file.dart';
+import '../errors/file_service_errors.dart';
+import '../services/file_service.dart';
+
+typedef DeleteJsonResult = Future<Result<Unit, FileServiceError>>;
 
 abstract class DeleteJson {
-  DeleteJsonCallback call(LanguageFile language);
+  DeleteJsonResult call(LanguageFile language);
 }
 
 class DeleteJsonImpl implements DeleteJson {
@@ -15,7 +16,7 @@ class DeleteJsonImpl implements DeleteJson {
   DeleteJsonImpl(this._service);
 
   @override
-  DeleteJsonCallback call(LanguageFile language) async {
+  DeleteJsonResult call(LanguageFile language) async {
     return await _service.deleteLanguage(language);
   }
 }

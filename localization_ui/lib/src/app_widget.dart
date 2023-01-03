@@ -11,16 +11,26 @@ class MyApp extends StatelessWidget {
     return FluentApp.router(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.dark,
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        accentColor: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        focusTheme: FocusThemeData(
+          glowFactor: is10footScreen() ? 2.0 : 0.0,
+        ),
+      ),
       theme: ThemeData(
         accentColor: Colors.blue,
-        brightness: Brightness.dark,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        focusTheme: FocusThemeData(
+          glowFactor: is10footScreen() ? 2.0 : 0.0,
+        ),
       ),
       localeResolutionCallback: (locale, supported) {
-        return const Locale('en', 'US');
+        return locale ?? const Locale('en', 'US');
       },
       localizationsDelegates: [
-        GlobalWidgetsLocalizations.delegate,
         LocalJsonLocalization.delegate,
       ],
       supportedLocales: const [

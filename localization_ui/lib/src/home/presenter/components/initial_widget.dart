@@ -15,14 +15,14 @@ class InitialWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'select-a-folder-initial-text'.i18n(),
+              'select-files-initial-text'.i18n(),
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 24,
               ),
             ),
             const SizedBox(height: 18),
-            const SelectFolderButton(textSize: 18),
+            SelectFolderButton(text: 'select-files'.i18n(), textSize: 18),
           ],
         ),
       ),
