@@ -1,12 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:localization_ui/src/home/domain/entities/file_entity.dart';
-
-import 'package:localization_ui/src/home/domain/entities/language_file.dart';
 import 'package:localization_ui/src/home/domain/errors/file_service_errors.dart';
 import 'package:localization_ui/src/home/infra/mappers/platform_file_mapper.dart';
 import 'package:localization_ui/src/home/infra/services/desktop_file_service.dart';

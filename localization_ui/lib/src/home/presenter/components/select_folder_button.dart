@@ -1,8 +1,6 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:localization/localization.dart';
 import 'package:localization_ui/src/home/presenter/stores/file_store.dart';
 
 class SelectFolderButton extends StatefulWidget {

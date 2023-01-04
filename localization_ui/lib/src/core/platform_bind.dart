@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:modular_interfaces/src/di/injector.dart';
+import 'package:modular_interfaces/modular_interfaces.dart';
+
 import 'package:universal_io/io.dart';
 
 typedef InjectBuild<T extends Object> = T Function(Injector i);

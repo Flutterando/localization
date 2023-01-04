@@ -12,7 +12,6 @@ import 'package:localization_ui/src/home/presenter/states/file_state.dart';
 import 'package:localization_ui/src/home/presenter/stores/file_store.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:result_dart/result_dart.dart';
-import 'package:value_listenable_test/value_listenable_test.dart';
 
 class LoadJsonMock extends Mock implements LoadJson {}
 
@@ -70,8 +69,6 @@ void main() {
   });
 
   test('readJson', () async {
-    // when(() => loadJson.call()).thenAnswer((_) async => Success([englishFile, portugueseFile]));
-    // when(() => readJson.call(any())).thenAnswer((_) async => const Success([]));
     when(() => saveJson.call(any())).thenAnswer((_) async => const Success(unit));
     await store.saveLanguages();
 
