@@ -82,7 +82,7 @@ class FileStore extends StreamStore<FileServiceError, FileState> with MementoMix
     langs.add(LanguageFile(FileEntity(name: '$languageName.json', bytes: Uint8List.fromList([])), keys));
 
     update(state.loadedLanguages(langs));
-
+    if (!kIsWeb) await saveLanguages();
     clearHistory();
   }
 
@@ -128,7 +128,7 @@ class FileStore extends StreamStore<FileServiceError, FileState> with MementoMix
     result.fold((r) async {
       final langs = state.languages.where((element) => element != language).map((e) => e.copy()).toList();
       update(state.loadedLanguages(langs));
-      await saveLanguages();
+      if (!kIsWeb) await saveLanguages();
       clearHistory();
     }, setError);
   }
