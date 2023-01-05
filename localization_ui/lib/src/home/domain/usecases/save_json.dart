@@ -1,12 +1,13 @@
-import 'package:fpdart/fpdart.dart';
-import 'package:localization_ui/src/home/domain/entities/language_file.dart';
-import 'package:localization_ui/src/home/domain/errors/errors.dart';
-import 'package:localization_ui/src/home/domain/services/file_service.dart';
+import 'package:result_dart/result_dart.dart';
 
-typedef SaveJsonCallback = Future<Either<FileServiceError, Unit>>;
+import '../entities/language_file.dart';
+import '../errors/file_service_errors.dart';
+import '../services/file_service.dart';
+
+typedef SaveJsonResult = Future<Result<Unit, FileServiceError>>;
 
 abstract class SaveJson {
-  SaveJsonCallback call(List<LanguageFile> languages);
+  SaveJsonResult call(List<LanguageFile> languages);
 }
 
 class SaveJsonImpl implements SaveJson {
@@ -15,7 +16,7 @@ class SaveJsonImpl implements SaveJson {
   SaveJsonImpl(this._service);
 
   @override
-  SaveJsonCallback call(List<LanguageFile> languages) async {
+  SaveJsonResult call(List<LanguageFile> languages) async {
     return await _service.saveLanguages(languages);
   }
 }

@@ -1,52 +1,60 @@
 import 'dart:convert';
-import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fpdart/fpdart.dart';
-import 'package:localization_ui/src/home/domain/entities/language_file.dart';
-import 'package:localization_ui/src/home/domain/errors/errors.dart';
-import 'package:localization_ui/src/home/infra/services/file_service.dart';
+import 'package:localization_ui/src/home/domain/entities/file_entity.dart';
+import 'package:localization_ui/src/home/domain/errors/file_service_errors.dart';
+import 'package:localization_ui/src/home/infra/mappers/platform_file_mapper.dart';
+import 'package:localization_ui/src/home/infra/services/desktop_file_service.dart';
+import 'package:mocktail/mocktail.dart';
 
-class FileFake extends Fake implements File {
-  String text = '';
-
-  @override
-  Future<File> writeAsString(String contents, {FileMode mode = FileMode.write, Encoding encoding = utf8, bool flush = false}) async {
-    text = contents;
-    return this;
-  }
-}
+class MockFilePicker extends Mock implements FilePicker {}
 
 void main() {
-  late FileServiceImpl service;
-  late FileFake file;
+  late DesktopFileService service;
+  late FilePicker filePicker;
 
   setUp(() {
-    service = FileServiceImpl();
-    file = FileFake();
+    final fileMapper = DesktopPlatformFileMapper();
+    filePicker = MockFilePicker();
+    service = DesktopFileService(fileMapper, filePicker);
   });
 
-  group('read json', () {
-    test('Read json files', () async {
-      final result = await service.getLanguages('./test/jsons');
-      final list = result.getOrElse((l) => []);
-      expect(list.length, 2);
+  group('read json:', () {
+    group('right content', () {
+      final englishFile = FileEntity(
+        name: 'en.json',
+        path: './test/jsons/en.json',
+        bytes: Uint8List.fromList(utf8.encode('{"hello-text": "Hello"}')),
+      );
+      final portugueseFile = FileEntity(
+        name: 'pt.json',
+        path: './test/jsons/pt.json',
+        bytes: Uint8List.fromList(utf8.encode('{"hello-text": "Olá"}')),
+      );
+
+      test('right content 1 file', () async {
+        final result = await service.getLanguagesByFiles([englishFile]);
+        final list = result.getOrElse((l) => []);
+        expect(list.length, 1);
+        expect(list[0].read('hello-text'), 'Hello');
+      });
+
+      test('right content 2 files', () async {
+        final result = await service.getLanguagesByFiles([englishFile, portugueseFile]);
+        final list = result.getOrElse((l) => []);
+        expect(list.length, 2);
+        expect(list[0].read('hello-text'), 'Hello');
+        expect(list[1].read('hello-text'), 'Olá');
+      });
     });
 
-    test('thows NotFoundFiles if not found path directory', () async {
-      final result = await service.getLanguages('./unknow');
-      expect(result.fold(id, id), isA<NotFoundFiles>());
+    test('thows NoFilesSelected when NO files were selected', () async {
+      when(() => filePicker.pickFiles(lockParentWindow: any(named: 'lockParentWindow'), allowMultiple: any(named: 'allowMultiple')))
+          .thenAnswer((invocation) async => null);
+      final result = await service.getFiles();
+      expect(result.fold((success) => success, (failure) => failure), isA<NoFilesSelected>());
     });
-  });
-
-  test('Save json files', () async {
-    final language = LanguageFile(file, {'hello-text': 'Hello', 'name': 'Jacob'});
-
-    final result = await service.saveLanguages([language]);
-    expect(result.isRight(), true);
-    expect(file.text, '''{
-  "hello-text": "Hello",
-  "name": "Jacob"
-}''');
   });
 }

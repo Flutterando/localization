@@ -3,7 +3,7 @@
 Package to simplify in-app translation.
 ## Install
 
-Use the **Localization** package together with **flutter_localization.
+Use the **Localization** package together with **flutter_localization**.
 
 Add in your `pubspec`:
 ```yaml
@@ -109,8 +109,8 @@ String text = 'person-text'.i18n(
         conditions: [count > 1]);
 print(text); // Welcome, people
 ```
-**
-**THAT`S IT!
+
+**THAT`S IT!**
 
 ## Additional settings
 
@@ -157,12 +157,12 @@ return MaterialApp(
 
 ## Localization UI
 
-![localization ui](https://github.com/Flutterando/localization/blob/master/localization-ui.png)
+[Web version](https://localization.codemagic.app) | [Download now](https://github.com/Flutterando/localization/releases)
 
 We have an application to help you configure your translation keys.
 The project is also open-source, so be fine if you want to help it evolve!
 
-[Download now](https://github.com/Flutterando/localization/releases)
+![localization ui](https://user-images.githubusercontent.com/16373553/210827297-0f5bcc7a-e950-40b5-bd91-dda61a2bda8d.png)
 
 ## Features and bugs
 

@@ -165,7 +165,7 @@ class __DialogRemoveLanguageWidgetState extends State<_DialogRemoveLanguageWidge
     controller = AnimationController(vsync: this, duration: const Duration(seconds: 10));
     countDownAnimation = Tween<double>(begin: 10, end: 0).animate(controller);
 
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.forward();
     });
   }

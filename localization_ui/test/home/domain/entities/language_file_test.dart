@@ -1,13 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
+import 'package:localization_ui/src/home/domain/entities/file_entity.dart';
 import 'package:localization_ui/src/home/domain/entities/language_file.dart';
 
 void main() {
-  test('name and nameWithoutExtension', () {
-    final entity = LanguageFile(File('assets/pt.json'), {});
-
-    expect(entity.name, 'pt.json');
-    expect(entity.nameWithoutExtension, 'pt');
-  });
+  const entity = LanguageFile(FileEntity(path: 'assets/pt.json', name: 'pt.json'), {});
+  
+  test('name', () => expect(entity.name, 'pt.json'));
+  test('nameWithoutExtension', () => expect(entity.nameWithoutExtension, 'pt'));
 }

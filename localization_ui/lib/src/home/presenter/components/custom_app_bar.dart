@@ -49,7 +49,7 @@ class CustomAppBar extends StatelessWidget {
             ),
           ),
           separedWidget,
-          const SelectFolderButton(),
+          SelectFolderButton(text: 'select-other-files'.i18n()),
           separedWidget,
           MouseRegion(
             cursor: SystemMouseCursors.click,
@@ -57,18 +57,8 @@ class CustomAppBar extends StatelessWidget {
               leading: const Icon(FluentIcons.translate),
               title: const Text('New'),
               items: [
-                DropDownButtonItem(
-                  title: Text('new-key'.i18n()),
-                  onTap: () {
-                    onNewKeyPressed?.call();
-                  },
-                ),
-                DropDownButtonItem(
-                  title: Text('new-language'.i18n()),
-                  onTap: () {
-                    onNewLanguagePressed?.call();
-                  },
-                ),
+                MenuFlyoutItem(text: Text('new-key'.i18n()), onPressed: onNewKeyPressed),
+                MenuFlyoutItem(text: Text('new-language'.i18n()), onPressed: onNewLanguagePressed),
               ],
             ),
           ),

@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'file_entity.dart';
 
 class LanguageFile {
   final Map<String, String> _dicionary;
@@ -17,8 +17,8 @@ class LanguageFile {
     _dicionary.addAll(dicionary);
   }
 
-  final File file;
-  String get name => file.uri.pathSegments.last;
+  final FileEntity file;
+  String get name => file.name;
   String get nameWithoutExtension => name.split('.').first;
 
   const LanguageFile(this.file, this._dicionary);

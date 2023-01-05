@@ -13,3 +13,7 @@ class FileServiceError implements Exception {
 class NotFoundFiles extends FileServiceError {
   const NotFoundFiles(String message, [StackTrace? stackTrace]) : super(message, stackTrace);
 }
+
+class NoFilesSelected extends FileServiceError {
+  const NoFilesSelected() : super('no-files-selected-error-message', null);
+}
