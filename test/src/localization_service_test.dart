@@ -91,12 +91,8 @@ void main() {
     test('load en_US - map', () async {
       Map<String, dynamic> translation = {
         "home-title": "Localization Test - %s",
-        "welcome": "Welcome, Today is %s",
         "login-label": "User",
-        "password-label": "Password",
-        "change-value": "Mudar para português"
-      }
-      ;
+      };
       await LocalizationService.instance.changeLanguageFromMap(Locale('en', 'US'), translation);
       var value = LocalizationService.instance.read('login-label', []);
       expect(value, 'User');
