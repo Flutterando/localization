@@ -15,7 +15,7 @@ class MapLocalization extends LocalizationsDelegate {
   @override
   Future<dynamic> load(Locale locale) async {
     LocalizationService.instance.showDebugPrintMode = showDebugPrintMode;
-    await LocalizationService.instance.changeLanguageFromMap(locale, translations[locale] ?? {});
+    LocalizationService.instance.changeLanguageFromMap(locale, translations[locale] ?? {});
   }
 
   @override
