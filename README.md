@@ -26,6 +26,19 @@ Now, add the delegate in **MaterialApp** or **CupertinoApp** and define a path w
     // set json file directory
     // default value is ['lib/i18n']
     LocalJsonLocalization.delegate.directories = ['lib/i18n'];
+    
+    //or set a map of translations
+    MapLocalization.delegate.translations = {
+      Locale('en', 'US'): {
+        'welcome-text': 'This text is in english',
+      },
+      Locale('es', 'ES'): {
+        'welcome-text': 'Este texto esta en español',
+      },
+      Locale('pt', 'BR'): {
+        'welcome-text': 'Este texto está em português',
+      },
+    };
 
     return MaterialApp(
       localizationsDelegates: [
@@ -33,8 +46,12 @@ Now, add the delegate in **MaterialApp** or **CupertinoApp** and define a path w
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
+        
         // delegate from localization package.
+        //json-file
         LocalJsonLocalization.delegate,
+        //or map
+        MapLocalization.delegate,
       ],
       home: HomePage(),
     );
