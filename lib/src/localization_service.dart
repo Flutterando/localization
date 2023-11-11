@@ -15,14 +15,14 @@ class LocalizationService {
 
   final _sentences = <String, dynamic>{};
 
-  Future changeLanguage(Locale locale, List<String> directories) async {
+  Future changeLanguageFromDirectories(Locale locale, List<String> directories) async {
     clearSentences();
     for (var directory in directories) {
-      await _changeLanguage(locale, directory);
+      await _changeLanguageFromDirectory(locale, directory);
     }
   }
 
-  Future _changeLanguage(Locale locale, String directory) async {
+  Future _changeLanguageFromDirectory(Locale locale, String directory) async {
     late String data;
     final selectedLanguage = locale.toString();
     if (directory.endsWith('/')) {
@@ -42,13 +42,23 @@ class LocalizationService {
       _result = {};
     }
 
-    for (var entry in _result.entries) {
+    _changeLanguageFromMap(locale, _result);
+  }
+
+  changeLanguageFromMap(Locale locale, Map<String, dynamic> map){
+    clearSentences();
+    _changeLanguageFromMap(locale, map);
+  }
+  
+  _changeLanguageFromMap(Locale locale, Map<String, dynamic> map){
+    for (var entry in map.entries) {
       if (_sentences.containsKey(entry.key)) {
-        ColoredPrint.warning('Duplicated Key: \"${entry.key}\" Path: \"$locale\"');
+        ColoredPrint.warning('Duplicated Key: \"${entry.key}\" Locale: \"$locale\"');
       }
       _sentences[entry.key] = entry.value;
     }
   }
+  
 
   @visibleForTesting
   void addSentence(String key, dynamic value) {

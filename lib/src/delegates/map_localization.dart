@@ -1,12 +1,13 @@
+
 import 'package:flutter/material.dart';
 import 'package:localization/src/localization_service.dart';
 
-class LocalJsonLocalization extends LocalizationsDelegate {
-  List<String> directories = ['lib/i18n'];
+class MapLocalization extends LocalizationsDelegate {
+  Map<Locale, Map<String, dynamic>> translations = {};
   bool showDebugPrintMode = true;
-  LocalJsonLocalization._();
+  MapLocalization._();
 
-  static final delegate = LocalJsonLocalization._();
+  static final delegate = MapLocalization._();
 
   @override
   bool isSupported(Locale locale) => true;
@@ -14,9 +15,9 @@ class LocalJsonLocalization extends LocalizationsDelegate {
   @override
   Future<dynamic> load(Locale locale) async {
     LocalizationService.instance.showDebugPrintMode = showDebugPrintMode;
-    await LocalizationService.instance.changeLanguageFromDirectories(locale, directories);
+    await LocalizationService.instance.changeLanguageFromMap(locale, translations[locale] ?? {});
   }
 
   @override
-  bool shouldReload(LocalJsonLocalization old) => false;
+  bool shouldReload(MapLocalization old) => false;
 }
