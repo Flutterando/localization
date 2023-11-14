@@ -79,9 +79,21 @@ void main() {
     });
   });
 
-  group('json file', () {
-    test('load en_US', () async {
-      await LocalizationService.instance.changeLanguage(Locale('en', 'US'), ['test/assets/lang']);
+  group('load translations', () {
+    test('load en_US - json file', () async {
+      await LocalizationService.instance.changeLanguageFromDirectories(Locale('en', 'US'), ['test/assets/lang']);
+      var value = LocalizationService.instance.read('login-label', []);
+      expect(value, 'User');
+      value = LocalizationService.instance.read('home-title', ['Flutterando']);
+      expect(value, 'Localization Test - Flutterando');
+    });
+
+    test('load en_US - map', () async {
+      Map<String, dynamic> translation = {
+        "home-title": "Localization Test - %s",
+        "login-label": "User",
+      };
+      await LocalizationService.instance.changeLanguageFromMap(Locale('en', 'US'), translation);
       var value = LocalizationService.instance.read('login-label', []);
       expect(value, 'User');
       value = LocalizationService.instance.read('home-title', ['Flutterando']);
