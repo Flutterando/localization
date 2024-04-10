@@ -183,7 +183,7 @@ The project is also open-source, so be fine if you want to help it evolve!
 
 ## Features and bugs
 
-The Segmented State Standard is constantly growing.
+Localization package is constantly growing.
 Let us know what you think of all this.
 If you agree, give a Star in that repository representing that you are signing and consenting to the proposed standard.
 
