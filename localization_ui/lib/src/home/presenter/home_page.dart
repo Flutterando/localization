@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:lazy_data_table_plus/lazy_data_table_plus.dart';
@@ -10,6 +11,7 @@ import 'package:localization/localization.dart';
 import 'package:localization_ui/src/home/presenter/extensions/file_language_extension.dart';
 import 'package:localization_ui/src/home/presenter/states/file_state.dart';
 import 'package:localization_ui/src/home/presenter/stores/file_store.dart';
+
 import 'components/column_widget.dart';
 import 'components/create_new_key_widget.dart';
 import 'components/custom_app_bar.dart';
@@ -45,9 +47,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     final store = context.read<FileStore>();
     store.observer(onError: (error) {
-      showSnackbar(
-        context,
-        Snackbar(content: Text(error.message.i18n())),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.message.i18n())),
       );
     });
   }
@@ -186,10 +187,20 @@ class _HomePageState extends State<HomePage> {
                               rowHeaderWidth: 220,
                             ),
                             tableTheme: LazyDataTableTheme(
-                              columnHeaderBorder: Border.all(color: Colors.black.withOpacity(0.38)),
-                              rowHeaderBorder: Border.all(color: Colors.black.withOpacity(0.38)),
-                              cellBorder: Border.all(color: Colors.black.withOpacity(0.12)),
-                              cornerBorder: Border.all(color: Colors.black.withOpacity(0.38)),
+                              columnHeaderBorder: Border.all(
+                                color: Colors.black.withOpacity(
+                                  0.38,
+                                ),
+                              ),
+                              rowHeaderBorder: Border.all(
+                                color: Colors.black.withOpacity(0.38),
+                              ),
+                              cellBorder: Border.all(
+                                color: Colors.black.withOpacity(0.12),
+                              ),
+                              cornerBorder: Border.all(
+                                color: Colors.black.withOpacity(0.38),
+                              ),
                               columnHeaderColor: Colors.black.withOpacity(0.3),
                               rowHeaderColor: Colors.black.withOpacity(0.3),
                               cornerColor: Colors.black.withOpacity(0.3),
@@ -211,7 +222,13 @@ class _HomePageState extends State<HomePage> {
                                 keyName: key,
                                 onLongPress: () {
                                   Clipboard.setData(ClipboardData(text: key));
-                                  showSnackbar(context, Snackbar(content: Text('clipboard-text'.i18n())));
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'clipboard-text'.i18n(),
+                                      ),
+                                    ),
+                                  );
                                 },
                                 onEditKey: () {
                                   dialogUpdateKeyName(key, context);

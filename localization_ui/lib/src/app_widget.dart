@@ -11,19 +11,19 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.dark,
-      darkTheme: ThemeData(
+      darkTheme: FluentThemeData(
         brightness: Brightness.dark,
         accentColor: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         focusTheme: FocusThemeData(
-          glowFactor: is10footScreen() ? 2.0 : 0.0,
+          glowFactor: is10footScreen(context) ? 2.0 : 0.0,
         ),
       ),
-      theme: ThemeData(
+      theme: FluentThemeData(
         accentColor: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         focusTheme: FocusThemeData(
-          glowFactor: is10footScreen() ? 2.0 : 0.0,
+          glowFactor: is10footScreen(context) ? 2.0 : 0.0,
         ),
       ),
       localeResolutionCallback: (locale, supported) {

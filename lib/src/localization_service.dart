@@ -45,12 +45,12 @@ class LocalizationService {
     _changeLanguageFromMap(locale, _result);
   }
 
-  changeLanguageFromMap(Locale locale, Map<String, dynamic> map){
+  changeLanguageFromMap(Locale locale, Map<String, dynamic> map) {
     clearSentences();
     _changeLanguageFromMap(locale, map);
   }
-  
-  _changeLanguageFromMap(Locale locale, Map<String, dynamic> map){
+
+  _changeLanguageFromMap(Locale locale, Map<String, dynamic> map) {
     for (var entry in map.entries) {
       if (_sentences.containsKey(entry.key)) {
         ColoredPrint.warning('Duplicated Key: \"${entry.key}\" Locale: \"$locale\"');
@@ -58,7 +58,6 @@ class LocalizationService {
       _sentences[entry.key] = entry.value;
     }
   }
-  
 
   @visibleForTesting
   void addSentence(String key, dynamic value) {
@@ -72,15 +71,15 @@ class LocalizationService {
   }) {
     List<String> keys = key.split('.');
     var value = keys.fold(_sentences, (_value, _key) {
-      if (_value is Map) {
+      if (_value.runtimeType is Map) {
         return _value[_key] ?? _key;
       }
       return _value.toString();
     });
-    if (value.contains('%s')) {
+    if (value.containsValue('%s')) {
       value = replaceArguments(value, arguments);
     }
-    if (value.contains('%b')) {
+    if (value.containsValue('%b')) {
       value = replaceConditions(value, conditions);
     }
 

@@ -66,7 +66,7 @@ class _KeyCellWidgetState extends State<KeyCellWidget> {
                                   cursor: SystemMouseCursors.click,
                                   child: IconButton(
                                     iconButtonMode: IconButtonMode.small,
-                                    style: ButtonStyle(backgroundColor: ButtonState.all(Colors.transparent)),
+                                    style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.transparent)),
                                     icon: Icon(
                                       FluentIcons.remove,
                                       color: Colors.white.withOpacity(0.8),
@@ -78,7 +78,7 @@ class _KeyCellWidgetState extends State<KeyCellWidget> {
                                   cursor: SystemMouseCursors.click,
                                   child: IconButton(
                                     iconButtonMode: IconButtonMode.small,
-                                    style: ButtonStyle(backgroundColor: ButtonState.all(Colors.transparent)),
+                                    style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.transparent)),
                                     icon: Icon(
                                       FluentIcons.edit,
                                       color: Colors.white.withOpacity(0.8),
