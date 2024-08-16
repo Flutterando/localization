@@ -15,14 +15,14 @@ class LocalizationService {
 
   final _sentences = <String, dynamic>{};
 
-  Future changeLanguageFromDirectories(Locale locale, List<String> directories) async {
+  Future<void> changeLanguageFromDirectories(Locale locale, List<String> directories) async {
     clearSentences();
     for (var directory in directories) {
       await _changeLanguageFromDirectory(locale, directory);
     }
   }
 
-  Future _changeLanguageFromDirectory(Locale locale, String directory) async {
+  Future<void> _changeLanguageFromDirectory(Locale locale, String directory) async {
     late String data;
     final selectedLanguage = locale.toString();
     if (directory.endsWith('/')) {
@@ -45,12 +45,12 @@ class LocalizationService {
     _changeLanguageFromMap(locale, _result);
   }
 
-  changeLanguageFromMap(Locale locale, Map<String, dynamic> map) {
+  void changeLanguageFromMap(Locale locale, Map<String, dynamic> map) {
     clearSentences();
     _changeLanguageFromMap(locale, map);
   }
 
-  _changeLanguageFromMap(Locale locale, Map<String, dynamic> map) {
+  void _changeLanguageFromMap(Locale locale, Map<String, dynamic> map) {
     for (var entry in map.entries) {
       if (_sentences.containsKey(entry.key)) {
         ColoredPrint.warning('Duplicated Key: \"${entry.key}\" Locale: \"$locale\"');
@@ -64,33 +64,54 @@ class LocalizationService {
     _sentences[key] = value;
   }
 
-  String read(
-    String key,
-    List<String> arguments, {
-    List<bool>? conditions,
-  }) {
-    List<String> keys = key.split('.');
-    var value = keys.fold(_sentences, (_value, _key) {
-      if (_value.runtimeType is Map) {
-        return _value[_key] ?? _key;
-      }
-      return _value.toString();
-    });
-    if (value.containsValue('%s')) {
+  String read(String key, List<String> arguments, {List<bool>? conditions}) {
+    var value = _getRawValueByKey(key) ?? key;
+    if (value.contains('%s')) {
       value = replaceArguments(value, arguments);
     }
-    if (value.containsValue('%b')) {
+    if (value.contains('%b')) {
       value = replaceConditions(value, conditions);
     }
 
     return value;
   }
 
+  /// ### Get the value by key.<br/>
+  /// * returns null if the key was not found;
+  ///
+  /// It can work with multi-levels, so if you have in your database this map:
+  /// ```json
+  /// {
+  ///   "home": {
+  ///     "title": "Home Page"
+  ///   }
+  /// }
+  /// ```
+  /// you can access the title by using the key
+  /// ```
+  /// "home.title"
+  /// ```
+  String? _getRawValueByKey(String key) {
+    final keys = key.split('.');
+    Map currentMapLevel = _sentences;
+
+    for (final key in keys) {
+      if (currentMapLevel[key] case Map deeperMapLevel) {
+        currentMapLevel = deeperMapLevel;
+      } else if (currentMapLevel[key] case String value) {
+        return value;
+      } else {
+        return null;
+      }
+    }
+    return null;
+  }
+
   String replaceConditions(String value, List<bool>? conditions) {
     final matchers = _getConditionMatch(value);
 
     if (conditions == null || conditions.length == 0) {
-      ColoredPrint.error('Existe condicionais configurada na String mas não foi passado nenhum por parametro.');
+      ColoredPrint.error('Existem condicionais configuradas na String (%b) mas não foi passado nenhum por parametro.');
       return value;
     }
     if (matchers.length != conditions.length) {
