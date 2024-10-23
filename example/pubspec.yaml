@@ -8,9 +8,9 @@ version: 1.0.0+1
 environment:
   sdk: ">=3.3.0 <4.0.0"
 
-localization_dir: assets\lang
-
 dependencies:
+  package_example:
+    path: package_example
   localization:
     path: ../
 
@@ -39,9 +39,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/lang/
-    - packages/package_example/assets/lang/en_US.json
-    - packages/package_example/assets/lang/pt_BR.json
+    - lib/assets/i18n/ # Não esquecer a "/" no final
+    - packages/package_example/assets/i18n/en_US.json
+    - packages/package_example/assets/i18n/pt_BR.json
 
 scripts:
   routes: flutter run --target=lib/main_routes.dart

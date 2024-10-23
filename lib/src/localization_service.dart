@@ -23,15 +23,30 @@ class LocalizationService {
   }
 
   Future<void> _changeLanguageFromDirectory(Locale locale, String directory) async {
-    late String data;
-    final selectedLanguage = locale.toString();
+    String? data;
     if (directory.endsWith('/')) {
       directory = directory.substring(0, directory.length - 1);
     }
-    final jsonFile = '$directory/$selectedLanguage.json';
 
-    data = await rootBundle.loadString(jsonFile);
-    ColoredPrint.log('Loaded $jsonFile');
+    final jsonFiles = [
+      '$directory/${locale.languageCode}_${locale.countryCode}.json', // Country specific language
+      '$directory/${locale.languageCode}.json', // No country specific language
+    ];
+
+    for (String jsonFile in jsonFiles) {
+      try {
+        data = await rootBundle.loadString(jsonFile);
+        ColoredPrint.log('Loaded $jsonFile');
+        break;
+      } catch (ex, stack) {
+        ColoredPrint.log('Not found $jsonFile');
+      }
+    }
+
+    if (data == null) {
+      ColoredPrint.log('$locale is not configured. Remove it from "supportedLocales" in your $MaterialApp.');
+      return;
+    }
 
     late Map<String, dynamic> _result;
 
