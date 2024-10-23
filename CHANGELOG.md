@@ -1,3 +1,9 @@
+## [2.2.0-beta.1] 2024-10-23
+* Bump Flutter version to 3.22.0 ++;
+* Created example importing translation files from a package;
+* If the key was not found in any of the translation files, it shows the entire key. Eg: `buttons.subscribe`;
+
+
 ## [2.1.0] 2022-02-03
 * Added multiples path files.
 
