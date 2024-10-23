@@ -21,7 +21,10 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    LocalJsonLocalization.delegate.directories = ['assets/lang'];
+    LocalJsonLocalization.delegate.directories = [
+      'lib/assets/i18n',
+      'packages/package_example/assets/i18n',
+    ];
 
     return MaterialApp(
       title: 'Flutter Demo',
@@ -30,11 +33,11 @@ class MyAppState extends State<MyApp> {
         if (supportedLocales.contains(locale)) {
           return locale;
         }
-
-        if (locale?.languageCode == 'en') {
-          return Locale('en', 'US');
-        }
-        return Locale('pt', 'BR');
+        return switch (locale?.languageCode) {
+          'en' => Locale('en', 'US'),
+          'pt' => Locale('pt', 'BR'),
+          _ => Locale('pt', 'BR'),
+        };
       },
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

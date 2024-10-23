@@ -1,0 +1,23 @@
+name: package_example
+description: "A new Flutter package project."
+version: 0.0.1
+homepage:
+publish_to: "none" #Remove this line if you wish to publish in pub.dev
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  assets:
+    - lib/assets/i18n/
+  

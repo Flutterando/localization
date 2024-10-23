@@ -43,7 +43,7 @@ Future dialogAddKeyName(BuildContext context) async {
               Navigator.of(context).pop();
             },
             style: ButtonStyle(
-              backgroundColor: ButtonState.all(SystemTheme.accentInstance.accent),
+              backgroundColor: WidgetStatePropertyAll(SystemTheme.accentInstance.accent),
             ),
             child: Text('save'.i18n()),
           )
@@ -88,7 +88,7 @@ Future dialogUpdateKeyName(String oldKey, BuildContext context) async {
               Navigator.of(context).pop();
             },
             style: ButtonStyle(
-              backgroundColor: ButtonState.all(SystemTheme.accentInstance.accent),
+              backgroundColor: WidgetStatePropertyAll(SystemTheme.accentInstance.accent),
             ),
             child: Text('save'.i18n()),
           )
@@ -128,7 +128,7 @@ Future dialogAddNewLanguage(BuildContext context) async {
               Navigator.of(context).pop();
             },
             style: ButtonStyle(
-              backgroundColor: ButtonState.all(SystemTheme.accentInstance.accent),
+              backgroundColor: WidgetStatePropertyAll(SystemTheme.accentInstance.accent),
             ),
             child: Text('save'.i18n()),
           )
@@ -197,7 +197,7 @@ class __DialogRemoveLanguageWidgetState extends State<_DialogRemoveLanguageWidge
               style: isDown
                   ? null
                   : ButtonStyle(
-                      backgroundColor: ButtonState.all(Colors.red),
+                      backgroundColor: WidgetStatePropertyAll(Colors.red),
                     ),
               child: Text('yes'.i18n() + (isDown ? '(' + count.toInt().toString() + ')' : '')),
             );

@@ -88,12 +88,12 @@ void main() {
       expect(value, 'Localization Test - Flutterando');
     });
 
-    test('load en_US - map', () async {
+    test('load en_US - map', () {
       Map<String, dynamic> translation = {
         "home-title": "Localization Test - %s",
         "login-label": "User",
       };
-      await LocalizationService.instance.changeLanguageFromMap(Locale('en', 'US'), translation);
+      LocalizationService.instance.changeLanguageFromMap(Locale('en', 'US'), translation);
       var value = LocalizationService.instance.read('login-label', []);
       expect(value, 'User');
       value = LocalizationService.instance.read('home-title', ['Flutterando']);

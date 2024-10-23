@@ -1,10 +1,10 @@
 name: localization
 description: Package to simplify the package translation.
-version: 2.1.1
+version: 2.2.0-beta.1
 homepage: https://github.com/Flutterando/localization
 
 environment:
-  sdk: ">=2.13.0 <4.0.0"
+  sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
   flutter:
