@@ -38,7 +38,7 @@ class LocalizationService {
         data = await rootBundle.loadString(jsonFile);
         ColoredPrint.log('Loaded $jsonFile');
         break;
-      } catch (ex, stack) {
+      } catch (ex) {
         ColoredPrint.log('Not found $jsonFile');
       }
     }
